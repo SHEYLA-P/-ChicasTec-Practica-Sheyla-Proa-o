@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f4f7">
+  <meta name="description" content="Presentación profesional y hoja de ruta de trabajo editable.">
+  <title>Presentación profesional · Hoja de ruta</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #292431;
+      --muted: #756f7a;
+      --paper: #fffdfd;
+      --canvas: #f7f4f7;
+      --line: #e9e3eb;
+      --lilac: #7838a8;
+      --lilac-soft: #eee2f6;
+      --pink: #be477d;
+      --pink-soft: #f9e5ef;
+      --green: #39765e;
+      --green-soft: #e2f0e9;
+      --shadow: 0 16px 50px rgba(52, 36, 61, .07);
+      font-family: "Aptos", "Segoe UI", sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, transparent 49px, rgba(120, 56, 168, .045) 50px, transparent 51px),
+        var(--canvas);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    button, input, select { font: inherit; }
+    button, a, select, input { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; }
+    button { color: inherit; }
+    .topbar {
+      position: sticky;
+      z-index: 5;
+      top: 0;
+      border-bottom: 1px solid rgba(233, 227, 235, .9);
+      background: rgba(255, 253, 253, .9);
+      backdrop-filter: blur(14px);
+    }
+    .topbar-inner {
+      width: min(1160px, calc(100% - 48px));
+      min-height: 68px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .brand-mark {
+      width: 34px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      color: white;
+      background: var(--lilac);
+      font-family: Georgia, serif;
+      font-size: 20px;
+    }
+    .brand-name { font-size: 13px; font-weight: 750; line-height: 1.25; }
+    .brand-name span { display: block; color: var(--muted); font-size: 11px; font-weight: 500; }
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-links a { color: var(--muted); font-size: 13px; text-decoration: none; }
+    .nav-links a:hover { color: var(--lilac); }
+    .toolbar { display: flex; align-items: center; gap: 8px; }
+    .button {
+      min-height: 38px;
+      padding: 8px 13px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--paper);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .button:hover { transform: translateY(-1px); border-color: #c8b3d5; }
+    .button.primary { border-color: var(--lilac); color: white; background: var(--lilac); }
+    .button.primary:hover { background: #632b91; }
+    .button.icon { width: 38px; padding: 0; font-size: 16px; }
+    .page { width: min(1160px, calc(100% - 48px)); margin: 34px auto 72px; }
+    .intro {
+      position: relative;
+      overflow: hidden;
+      padding: 34px 40px 30px;
+      border: 1px solid #eadfed;
+      border-radius: 10px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      animation: arrive .55s ease both;
+    }
+    .intro::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 8px;
+      height: 100%;
+      background: linear-gradient(var(--lilac) 0 48%, var(--pink) 48% 100%);
+      content: "";
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--lilac);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { width: 18px; height: 2px; background: var(--pink); content: ""; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 720px;
+      margin: 12px 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 500;
+      line-height: 1.12;
+    }
+    .intro-copy { max-width: 680px; margin-bottom: 22px; color: var(--muted); }
+    .intro-bottom { display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+    .identity { display: flex; align-items: center; gap: 12px; }
+    .avatar {
+      width: 46px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border: 1px solid #e5d3ef;
+      border-radius: 50%;
+      color: var(--lilac);
+      background: var(--lilac-soft);
+      font-family: Georgia, serif;
+      font-size: 19px;
+    }
+    .identity strong, .identity span { display: block; }
+    .identity strong { font-size: 13px; }
+    .identity span { color: var(--muted); font-size: 12px; }
+    .quote {
+      max-width: 365px;
+      margin: 0;
+      padding-left: 14px;
+      border-left: 2px solid var(--pink);
+      color: #66545f;
+      font-family: Georgia, serif;
+      font-size: 14px;
+      font-style: italic;
+    }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin: 35px 0 15px; }
+    .section-heading h2 { margin: 0; font-family: Georgia, serif; font-size: 24px; font-weight: 500; }
+    .section-heading p { margin: 0; color: var(--muted); font-size: 12px; }
+    .overview-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 16px; }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--paper);
+      box-shadow: 0 5px 20px rgba(52, 36, 61, .035);
+    }
+    .about-panel { padding: 24px; }
+    .panel-kicker { margin-bottom: 10px; color: var(--pink); font-size: 11px; font-weight: 800; text-transform: uppercase; }
+    .about-panel h3 { margin-bottom: 8px; font-family: Georgia, serif; font-size: 20px; font-weight: 500; }
+    .about-panel p { margin-bottom: 17px; color: var(--muted); font-size: 13px; }
+    .about-panel p:last-child { margin-bottom: 0; }
+    .goals-panel { padding: 24px; background: #f5edf9; }
+    .goals-panel h3 { margin-bottom: 15px; font-family: Georgia, serif; font-size: 19px; font-weight: 500; }
+    .goal-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .goal-list li { display: grid; grid-template-columns: 25px 1fr; gap: 10px; align-items: start; font-size: 13px; }
+    .goal-number { display: grid; width: 24px; aspect-ratio: 1; place-items: center; border-radius: 7px; color: var(--lilac); background: white; font-size: 11px; font-weight: 800; }
+    .goal-list span:last-child { color: #5f5765; }
+    .success-note { margin-top: 16px; padding: 11px 13px; border-radius: 6px; color: #75445f; background: var(--pink-soft); font-size: 12px; }
+    .roadmap-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+    .progress-wrap { width: min(260px, 40%); }
+    .progress-label { display: flex; justify-content: space-between; margin-bottom: 5px; color: var(--muted); font-size: 11px; }
+    .progress-track { height: 6px; overflow: hidden; border-radius: 9px; background: #e8e1e9; }
+    .progress-fill { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--lilac), var(--pink)); transition: width .3s ease; }
+    .phase-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .phase { padding: 20px; }
+    .phase-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .phase-index { color: var(--lilac); font-size: 11px; font-weight: 800; }
+    .phase:nth-child(2) .phase-index { color: var(--pink); }
+    .phase:nth-child(3) .phase-index { color: var(--green); }
+    .phase-dates { padding: 4px 8px; border-radius: 99px; color: #6e4c83; background: var(--lilac-soft); font-size: 10px; font-weight: 700; }
+    .phase:nth-child(2) .phase-dates { color: #9a426a; background: var(--pink-soft); }
+    .phase:nth-child(3) .phase-dates { color: #3c705a; background: var(--green-soft); }
+    .phase h3 { min-height: 48px; margin-bottom: 12px; font-family: Georgia, serif; font-size: 17px; font-weight: 500; line-height: 1.35; }
+    .task-list { display: grid; gap: 11px; margin: 0; padding: 0; list-style: none; }
+    .task-list label { display: grid; grid-template-columns: 17px 1fr; gap: 9px; align-items: start; color: #605b65; font-size: 12px; line-height: 1.45; cursor: pointer; }
+    .task-list input { width: 15px; height: 15px; margin: 1px 0 0; accent-color: var(--lilac); cursor: pointer; }
+    .task-list input:checked + span { color: #918b94; text-decoration: line-through; }
+    .commitments { overflow: hidden; }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td { padding: 13px 16px; border-bottom: 1px solid var(--line); font-size: 12px; }
+    th { color: var(--muted); background: #fbf9fb; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+    tbody tr:last-child td { border-bottom: 0; }
+    td { color: #57515d; }
+    td:first-child { min-width: 150px; color: var(--ink); font-weight: 700; }
+    .status-select { max-width: 140px; padding: 6px 24px 6px 9px; border: 1px solid var(--line); border-radius: 5px; color: var(--lilac); background: white; font-size: 11px; font-weight: 700; }
+    .contact-panel { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 24px; padding: 24px; color: white; background: #33283a; }
+    .contact-panel h2 { margin: 0 0 5px; font-family: Georgia, serif; font-size: 23px; font-weight: 500; }
+    .contact-panel p { margin: 0; color: #d3cbd6; font-size: 12px; }
+    .contact-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; }
+    .contact-item { color: #e5dce8; font-size: 11px; }
+    .contact-item strong { display: block; margin-bottom: 2px; color: #e9b5d0; font-size: 10px; text-transform: uppercase; }
+    .contact-item a { text-decoration-color: #a78bab; text-underline-offset: 3px; }
+    .footer { display: flex; justify-content: space-between; gap: 18px; padding: 18px 4px; color: var(--muted); font-size: 11px; }
+    .edit-hint { color: var(--lilac); font-weight: 650; }
+    [contenteditable="true"] { outline: 2px solid rgba(120, 56, 168, .18); outline-offset: 3px; border-radius: 2px; }
+    .toast { position: fixed; right: 22px; bottom: 22px; z-index: 10; padding: 11px 16px; border-radius: 7px; color: white; background: #33283a; box-shadow: var(--shadow); font-size: 12px; opacity: 0; pointer-events: none; transform: translateY(8px); transition: .2s ease; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    @keyframes arrive { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 800px) {
+      .nav-links { gap: 14px; }
+      .nav-links a { font-size: 11px; }
+      .overview-grid { grid-template-columns: 1fr; }
+      .phase-grid { grid-template-columns: 1fr; }
+      .phase h3 { min-height: 0; }
+      .contact-panel { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      body { background: var(--canvas); }
+      .topbar-inner, .page { width: min(100% - 28px, 1160px); }
+      .topbar-inner { min-height: 60px; gap: 8px; }
+      .nav-links { display: none; }
+      .brand-name { font-size: 12px; }
+      .toolbar { gap: 5px; }
+      .toolbar .button { min-height: 35px; padding: 7px 9px; font-size: 11px; }
+      .toolbar .button.icon { width: 35px; padding: 0; }
+      .page { margin-top: 18px; }
+      .intro { padding: 26px 22px 22px; }
+      h1 { font-size: 35px; }
+      .intro-bottom { align-items: flex-start; flex-direction: column; }
+      .quote { max-width: none; }
+      .section-heading { align-items: flex-start; flex-direction: column; margin-top: 27px; }
+      .roadmap-head { align-items: flex-start; flex-direction: column; }
+      .progress-wrap { width: 100%; }
+      .phase { padding: 18px; }
+      .contact-list { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 5px; }
+      th, td { padding: 11px 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+    @media print {
+      body { background: white; }
+      .topbar, .toolbar, .edit-hint, .footer .print-note { display: none !important; }
+      .page { width: 100%; margin: 0; }
+      .intro, .panel { box-shadow: none; break-inside: avoid; }
+      .phase-grid { grid-template-columns: repeat(3, 1fr); }
+      .overview-grid { grid-template-columns: 1.15fr .85fr; }
+      .contact-panel { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
+        <span class="brand-mark" aria-hidden="true">✳</span>
+        <span class="brand-name">PRESENTACIÓN<span>Hoja de ruta profesional</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="#perfil">Perfil</a>
+        <a href="#ruta">Hoja de ruta</a>
+        <a href="#compromisos">Compromisos</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <div class="toolbar">
+        <button class="button" id="edit-button" type="button" aria-pressed="false">✎ Editar</button>
+        <button class="button primary" id="save-button" type="button">Guardar</button>
+        <button class="button icon" id="print-button" type="button" aria-label="Imprimir o exportar a PDF" title="Imprimir o exportar a PDF">⤓</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page" id="inicio">
+    <section class="intro" aria-labelledby="page-title">
+      <span class="eyebrow">Perfil profesional · <span class="editable" data-key="project">[Nombre del proyecto]</span></span>
+      <h1 id="page-title" class="editable" data-key="title">Ideas claras.<br>Trabajo con propósito.</h1>
+      <p class="intro-copy editable" data-key="summary">Una presentación breve de tu enfoque profesional y del impacto que buscas crear. Personaliza este espacio con una descripción que conecte tus fortalezas con tus objetivos.</p>
+      <div class="intro-bottom">
+        <div class="identity">
+          <span class="avatar" aria-hidden="true">✿</span>
+          <div><strong class="editable" data-key="name">[Tu nombre y apellidos]</strong><span class="editable" data-key="role">[Tu rol o especialidad]</span></div>
+        </div>
+        <blockquote class="quote editable" data-key="quote">«[Una frase o principio que defina tu forma de trabajar.]»</blockquote>
+      </div>
+    </section>
+
+    <section id="perfil" aria-labelledby="profile-heading">
+      <div class="section-heading">
+        <h2 id="profile-heading">Tu perfil, en contexto</h2>
+        <p>Una mirada rápida a quién eres y hacia dónde vas.</p>
+      </div>
+      <div class="overview-grid">
+        <article class="panel about-panel">
+          <p class="panel-kicker">01 / Presentación personal</p>
+          <h3>Experiencia con intención</h3>
+          <p class="editable" data-key="profile">[Resume aquí tus fortalezas principales, experiencia clave y el valor diferencial que aportas. Cuenta qué te mueve profesionalmente y cómo contribuyes a tus proyectos.]</p>
+          <p class="editable" data-key="approach">[Añade una segunda idea sobre tu manera de colaborar, resolver problemas o aprender.]</p>
+        </article>
+        <article class="panel goals-panel">
+          <p class="panel-kicker">02 / Dirección</p>
+          <h3>Metas principales</h3>
+          <ol class="goal-list">
+            <li><span class="goal-number">01</span><span class="editable" data-key="goal-1">[Meta principal: resultado concreto que deseas alcanzar.]</span></li>
+            <li><span class="goal-number">02</span><span class="editable" data-key="goal-2">[Meta secundaria: impacto esperado y a quién beneficia.]</span></li>
+            <li><span class="goal-number">03</span><span class="editable" data-key="goal-3">[Meta complementaria: cómo medirás el progreso.]</span></li>
+          </ol>
+          <div class="success-note"><strong>Señal de éxito:</strong> <span class="editable" data-key="success">[Define un resultado observable o indicador clave.]</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="ruta" aria-labelledby="roadmap-heading">
+      <div class="section-heading">
+        <div><h2 id="roadmap-heading">Hoja de ruta</h2><p>Ocho semanas para pasar del diagnóstico al impacto.</p></div>
+        <span class="edit-hint">☑ Marca las tareas a medida que avanzas</span>
+      </div>
+      <div class="roadmap-head">
+        <span class="eyebrow">Plan de trabajo · 3 fases</span>
+        <div class="progress-wrap" aria-label="Progreso de las tareas">
+          <div class="progress-label"><span>Avance general</span><strong id="progress-value">0%</strong></div>
+          <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        </div>
+      </div>
+      <div class="phase-grid">
+        <article class="panel phase">
+          <div class="phase-top"><span class="phase-index">FASE 01</span><span class="phase-dates">Semanas 1–2</span></div>
+          <h3>Diagnóstico y planificación</h3>
+          <ul class="task-list">
+            <li><label><input type="checkbox" data-task="task-1"><span class="editable" data-key="task-label-1">Definir objetivos específicos y alcance del proyecto.</span></label></li>
+            <li><label><input type="checkbox" data-task="task-2"><span class="editable" data-key="task-label-2">Mapear recursos, herramientas y personas involucradas.</span></label></li>
+            <li><label><input type="checkbox" data-task="task-3"><span class="editable" data-key="task-label-3">Acordar prioridades y criterios de éxito.</span></label></li>
+          </ul>
+        </article>
+        <article class="panel phase">
+          <div class="phase-top"><span class="phase-index">FASE 02</span><span class="phase-dates">Semanas 3–6</span></div>
+          <h3>Ejecución y desarrollo</h3>
+          <ul class="task-list">
+            <li><label><input type="checkbox" data-task="task-4"><span class="editable" data-key="task-label-4">Implementar la primera entrega o hito clave.</span></label></li>
+            <li><label><input type="checkbox" data-task="task-5"><span class="editable" data-key="task-label-5">Revisar avances, riesgos y bloqueos periódicamente.</span></label></li>
+            <li><label><input type="checkbox" data-task="task-6"><span class="editable" data-key="task-label-6">Ajustar y optimizar el plan según los resultados.</span></label></li>
+          </ul>
+        </article>
+        <article class="panel phase">
+          <div class="phase-top"><span class="phase-index">FASE 03</span><span class="phase-dates">Semanas 7–8</span></div>
+          <h3>Evaluación y cierre</h3>
+          <ul class="task-list">
+            <li><label><input type="checkbox" data-task="task-7"><span class="editable" data-key="task-label-7">Medir resultados frente a objetivos e indicadores.</span></label></li>
+            <li><label><input type="checkbox" data-task="task-8"><span class="editable" data-key="task-label-8">Presentar el informe de impacto o entrega final.</span></label></li>
+            <li><label><input type="checkbox" data-task="task-9"><span class="editable" data-key="task-label-9">Definir mantenimiento, seguimiento y próximos pasos.</span></label></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="compromisos" aria-labelledby="commitments-heading">
+      <div class="section-heading">
+        <div><h2 id="commitments-heading">Matriz de compromisos</h2><p>Entregables, impacto esperado y fechas clave.</p></div>
+      </div>
+      <div class="panel commitments table-scroll">
+        <table>
+          <thead><tr><th>Hito / entregable</th><th>Impacto esperado</th><th>Fecha límite</th><th>Estado</th></tr></thead>
+          <tbody>
+            <tr><td class="editable" data-key="deliverable-1">Entregable 1</td><td class="editable" data-key="impact-1">[Optimización de procesos]</td><td class="editable" data-key="date-1">[DD/MM/AAAA]</td><td><select class="status-select" data-status="status-1" aria-label="Estado del entregable 1"><option>Pendiente</option><option>En proceso</option><option>Completado</option><option>Bloqueado</option></select></td></tr>
+            <tr><td class="editable" data-key="deliverable-2">Entregable 2</td><td class="editable" data-key="impact-2">[Mejora de resultados]</td><td class="editable" data-key="date-2">[DD/MM/AAAA]</td><td><select class="status-select" data-status="status-2" aria-label="Estado del entregable 2"><option>Pendiente</option><option selected>En proceso</option><option>Completado</option><option>Bloqueado</option></select></td></tr>
+            <tr><td class="editable" data-key="deliverable-3">Entregable 3</td><td class="editable" data-key="impact-3">[Informe final y balance]</td><td class="editable" data-key="date-3">[DD/MM/AAAA]</td><td><select class="status-select" data-status="status-3" aria-label="Estado del entregable 3"><option>Pendiente</option><option>En proceso</option><option>Completado</option><option>Bloqueado</option></select></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="contacto" aria-labelledby="contact-heading">
+      <div class="section-heading"><h2 id="contact-heading">Contacto</h2></div>
+      <div class="panel contact-panel">
+        <div><h2>Hablemos de lo que viene.</h2><p class="editable" data-key="contact-message">[Una invitación breve para conversar sobre tus metas, proyectos o colaboraciones.]</p></div>
+        <div class="contact-list">
+          <div class="contact-item"><strong>Correo</strong><a class="editable" data-key="email" href="mailto:usuario@ejemplo.com">usuario@ejemplo.com</a></div>
+          <div class="contact-item"><strong>LinkedIn</strong><a class="editable" data-key="linkedin" href="#">[Enlace a tu perfil]</a></div>
+          <div class="contact-item"><strong>Otros enlaces</strong><span class="editable" data-key="links">[Portafolio, GitHub u otro]</span></div>
+          <div class="contact-item"><strong>Disponibilidad</strong><span class="editable" data-key="availability">Lunes a viernes · 09:00–18:00</span></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>© <span id="year"></span> <span class="editable" data-key="footer-name">[Tu nombre]</span> · Hecho con intención.</span>
+      <span class="print-note">Última revisión: <span class="editable" data-key="review-date">[DD/MM/AAAA]</span></span>
+    </footer>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite">Cambios guardados en este dispositivo.</div>
+
+  <script>
+    const editButton = document.querySelector("#edit-button");
+    const saveButton = document.querySelector("#save-button");
+    const toast = document.querySelector("#toast");
+    let toastTimer;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    function updateProgress() {
+      const tasks = [...document.querySelectorAll("[data-task]")];
+      const completed = tasks.filter((task) => task.checked).length;
+      const percentage = Math.round((completed / tasks.length) * 100);
+      document.querySelector("#progress-value").textContent = `${percentage}%`;
+      document.querySelector("#progress-fill").style.width = `${percentage}%`;
+    }
+
+    function savePage() {
+      const content = Object.fromEntries([...document.querySelectorAll("[data-key]")].map((element) => [element.dataset.key, element.innerHTML]));
+      const tasks = Object.fromEntries([...document.querySelectorAll("[data-task]")].map((element) => [element.dataset.task, element.checked]));
+      const statuses = Object.fromEntries([...document.querySelectorAll("[data-status]")].map((element) => [element.dataset.status, element.value]));
+      localStorage.setItem("professional-roadmap", JSON.stringify({ content, tasks, statuses }));
+      showToast("Cambios guardados en este dispositivo.");
+    }
+
+    function loadPage() {
+      const saved = localStorage.getItem("professional-roadmap");
+      if (!saved) return;
+      try {
+        const state = JSON.parse(saved);
+        for (const [key, value] of Object.entries(state.content || {})) {
+          const element = document.querySelector(`[data-key="${key}"]`);
+          if (element) element.innerHTML = value;
+        }
+        for (const [key, value] of Object.entries(state.tasks || {})) {
+          const element = document.querySelector(`[data-task="${key}"]`);
+          if (element) element.checked = value;
+        }
+        for (const [key, value] of Object.entries(state.statuses || {})) {
+          const element = document.querySelector(`[data-status="${key}"]`);
+          if (element) element.value = value;
+        }
+      } catch {
+        localStorage.removeItem("professional-roadmap");
+      }
+    }
+
+    editButton.addEventListener("click", () => {
+      const editing = editButton.getAttribute("aria-pressed") !== "true";
+      editButton.setAttribute("aria-pressed", String(editing));
+      editButton.textContent = editing ? "✓ Terminar edición" : "✎ Editar";
+      document.querySelectorAll("[data-key]").forEach((element) => {
+        element.contentEditable = String(editing);
+        element.spellcheck = editing;
+      });
+      if (!editing) savePage();
+    });
+
+    saveButton.addEventListener("click", savePage);
+    document.querySelector("#print-button").addEventListener("click", () => window.print());
+    document.querySelectorAll("[data-task]").forEach((task) => task.addEventListener("change", updateProgress));
+    document.querySelectorAll("[data-status]").forEach((status) => status.addEventListener("change", savePage));
+    document.querySelector("#year").textContent = new Date().getFullYear();
+    loadPage();
+    updateProgress();
+  </script>
+</body>
+</html>
